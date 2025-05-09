@@ -5,7 +5,7 @@ The CI tracks benchmarks for the following Swift versions
 - [6.0.3](https://github.com/swiftlang/swift-docker/blob/f44060cdf224436060d2df98a5c3f63f2600de63/6.0/ubuntu/24.04/Dockerfile)
 - [6.1.0](https://github.com/swiftlang/swift-docker/blob/fad056fa5f65f926323f0ff61129cb4e6b1eec11/6.1/ubuntu/24.04/Dockerfile)
 - [nightly-main](https://hub.docker.com/layers/swiftlang/swift/nightly-main/images/sha256-3579d03b01a579f477c4119c2359452f774aec843861f384ab1a01cd2af87891)
-- [nighly-6.2](https://hub.docker.com/layers/swiftlang/swift/nightly-6.2-noble/images/sha256-6383e8f65855b17bfc511446f1dba35405a55d23fd1982576757a84127c55f11)
+- [nightly-6.2](https://hub.docker.com/layers/swiftlang/swift/nightly-6.2-noble/images/sha256-6383e8f65855b17bfc511446f1dba35405a55d23fd1982576757a84127c55f11)
 
 
 ## Overview
