@@ -56,7 +56,7 @@ struct Solution: Differentiable {
     @differentiable(reverse)
     func evolve(for numSteps: Int) -> Self {
         var result = self
-        for step in 0..<numSteps {
+        for _ in 0..<numSteps {
             result = self.evolve()
         }
         return result
