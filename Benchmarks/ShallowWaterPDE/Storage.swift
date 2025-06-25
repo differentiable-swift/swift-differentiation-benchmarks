@@ -128,9 +128,9 @@ extension Array2DStorage: Differentiable where Element: Differentiable {
         return (
             value: (),
             pullback: { tangentVector in
-                precondition(width == tangentVector.width, "width mismatch")
-                precondition(height == tangentVector.height, "height mismatch")
-                precondition(count == tangentVector.values.count, "values count mismatch")
+                precondition(width == tangentVector.width, "width mismatch, \(width) != \(tangentVector.width)")
+                precondition(height == tangentVector.height, "height mismatch, \(height) != \(tangentVector.height)")
+                precondition(count == tangentVector.values.count, "values count mismatch, \(count) != \(tangentVector.values.count)")
                 let dElement = tangentVector.values[x + y * width]
                 tangentVector.values[x + y * width] = .zero
                 return dElement
