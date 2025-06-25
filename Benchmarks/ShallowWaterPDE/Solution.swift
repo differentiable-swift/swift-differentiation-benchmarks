@@ -96,7 +96,7 @@ extension Array where Element == Solution {
         self.init()
 
         var currentSolution = initialSolution
-        for step in 0 ..< numSteps {
+        for _ in 0 ..< numSteps {
 //            Signpost.default.begin("timestep")
 
             // TODO: remove from derivative?
