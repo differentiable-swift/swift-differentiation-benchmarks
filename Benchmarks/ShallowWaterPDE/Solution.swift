@@ -53,6 +53,15 @@ struct Solution: Differentiable {
         return Self(currentWaterLevel: newWaterLevel, previousWaterLevel: currentWaterLevel, time: time + dt)
     }
     
+    @differentiable(reverse)
+    func evolve(for numSteps: Int) -> Self {
+        var result = self
+        for step in 0..<numSteps {
+            result = self.evolve()
+        }
+        return result
+   }
+
     static func optimization(
         target: Array2DStorage<Float>,
         resolution: Int,
