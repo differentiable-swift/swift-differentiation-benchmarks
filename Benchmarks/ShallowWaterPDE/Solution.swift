@@ -75,10 +75,8 @@ struct Solution: Differentiable {
                 initialWaterLevel -> Float in
                 let initialSolution = Solution(waterLevel: initialWaterLevel)
                 // TODO: we can save memory here by not keeping all the in between solutions
-                let evolution = [Solution](evolve: initialSolution, for: duration)
-
-                let last = withoutDerivative(at: evolution.count - 1)
-                let lastEvo = evolution[last].currentWaterLevel
+                let evolution = initialSolution.evolve(for: duration)
+                let lastEvo = evolution.currentWaterLevel
                 let loss = lastEvo.meanSquaredError(to: target)
                 return loss
             }
