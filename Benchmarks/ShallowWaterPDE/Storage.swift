@@ -65,7 +65,16 @@ extension Array2DStorage: AdditiveArithmetic where Element: AdditiveArithmetic {
             lhs.width == rhs.width && lhs.height == rhs.height,
             "Shape mismatch: (\(lhs.width), \(lhs.height)) and (\(rhs.width), \(rhs.height))"
         )
-        return .init(width: lhs.width, height: lhs.height, values: zip(lhs.values, rhs.values).map(+))
+        let totalCount = lhs.values.count
+        return .init(width: lhs.width,
+                     height: lhs.height,
+                     values: .init(unsafeUninitializedCapacity: totalCount) {
+            buffer, initializedCount in
+            initializedCount = totalCount
+            for i in 0..<initializedCount {
+                buffer[i] = lhs.values[i] + rhs.values[i]
+            }
+        })
     }
     
     @inlinable
@@ -80,7 +89,16 @@ extension Array2DStorage: AdditiveArithmetic where Element: AdditiveArithmetic {
             lhs.width == rhs.width && lhs.height == rhs.height,
             "Shape mismatch: (\(lhs.width), \(lhs.height)) and (\(rhs.width), \(rhs.height))"
         )
-        return .init(width: lhs.width, height: lhs.height, values: zip(lhs.values, rhs.values).map(-))
+        let totalCount = lhs.values.count
+        return .init(width: lhs.width,
+                     height: lhs.height,
+                     values: .init(unsafeUninitializedCapacity: totalCount) {
+            buffer, initializedCount in
+            initializedCount = totalCount
+            for i in 0..<initializedCount {
+                buffer[i] = lhs.values[i] - rhs.values[i]
+            }
+        })
     }
 }
 
