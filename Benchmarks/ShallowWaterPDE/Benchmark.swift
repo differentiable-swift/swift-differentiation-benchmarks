@@ -1,23 +1,23 @@
 import Benchmark
 
 let benchmarks: @Sendable () -> Void = {
-    let iterationsList = [5, 10, 15, 20, 25]
-    let resolutions = [10, 20, 30, 40, 50]
-    for iterations in iterationsList {
+    let durations = [20, 40, 60, 80]
+    let resolutions = [10, 20, 30, 40]
+    for duration in durations {
         for resolution in resolutions {
             Benchmark(
                 "ShallowWaterPDE",
                 configuration: .init(
                     metrics: [.wallClock, .mallocCountTotal],
                     tags: [
-                        "iterations": "\(iterations)",
                         "resolution": "\(resolution)",
+                        "duration": "\(duration)",
                     ],
                     maxDuration: .seconds(300),
                     maxIterations: 20
                 )
             ) { benchmark in
-                let duration = 10
+                let iterations = 10
                 let target = Array2DStorage<Float>.loadTarget(target: Resources.swiftLogo.url, resolution: resolution)
                 
                 benchmark.startMeasurement()
