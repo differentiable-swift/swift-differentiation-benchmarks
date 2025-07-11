@@ -1,6 +1,6 @@
 import Benchmark
 import Foundation
-import _Differentiation
+import Differentiation
 
 let benchmarks: @Sendable () -> Void = {
     // - MARK: Simple functions.
@@ -638,5 +638,30 @@ let benchmarks: @Sendable () -> Void = {
             v += vx + vy + vz
         }
         blackHole(v)
+    }
+
+    Benchmark("Array.map", configuration: .init(tags: ["pass": "regular"], scalingFactor: .one)) { benchmark in
+        let xs = Array<Double>.init(repeating: 0.0, count: 1024)
+        benchmark.startMeasurement()
+        let result = xs.differentiableMap { sin($0) }
+        benchmark.stopMeasurement()
+        blackHole(result)
+    }
+
+    Benchmark("Array.map", configuration: .init(tags: ["pass": "forward"], scalingFactor: .one)) { benchmark in
+        let xs = Array<Double>.init(repeating: 0.0, count: 1024)
+        benchmark.startMeasurement()
+        let result = valueWithPullback(at: xs, of: { $0.differentiableMap { sin($0) }})
+        benchmark.stopMeasurement()
+        blackHole(result)
+    }
+
+    Benchmark("Array.map", configuration: .init(tags: ["pass": "reverse"], scalingFactor: .one)) { benchmark in
+        let xs = Array<Double>.init(repeating: 0.0, count: 1024)
+        let ys = Array<Double>.TangentVector.init(repeating: 0.0, count: 1024)
+        let (value, pullback) = valueWithPullback(at: xs, of: { $0.differentiableMap { sin($0) }})
+        benchmark.startMeasurement()
+        blackHole(pullback(ys))
+        benchmark.stopMeasurement()
     }
 }

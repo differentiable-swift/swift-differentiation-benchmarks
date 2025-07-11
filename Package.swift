@@ -12,12 +12,14 @@ let package = Package(
          // TODO: change package-benchmark to release version tag when a release with this commit is cut
         .package(url: "https://github.com/ordo-one/package-benchmark", revision: "3db567fb696772df6ba38e47428b3aae94d6f95b"), 
         .package(url: "https://github.com/tayloraswift/swift-png", from: "4.4.0"),
+        .package(url: "https://github.com/differentiable-swift/swift-differentiation", from: "1.0.0")
     ],
     targets: [
         .executableTarget(
             name: "LanguageCoverage",
             dependencies: [
                 .product(name: "Benchmark", package: "package-benchmark"),
+                .product(name: "Differentiation", package: "swift-differentiation")
             ],
             path: "Benchmarks/LanguageCoverage",
             plugins: [
