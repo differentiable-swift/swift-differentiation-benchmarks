@@ -2,7 +2,7 @@ import Benchmark
 
 let benchmarks: @Sendable () -> Void = {
     let durations = [10, 25, 50, 75]
-    let resolutions = [20, 30, 40, 50]
+    let resolutions = [20, 40, 50, 60, 80]
     for duration in durations {
         for resolution in resolutions {
             Benchmark(
