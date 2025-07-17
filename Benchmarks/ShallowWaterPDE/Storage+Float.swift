@@ -16,8 +16,8 @@ extension Array2DStorage where Element == Float {
     func meanSquaredError(to target: Array2DStorage<Float>) -> Float {
         var mse: Float = 0.0
 
-        for x in 0 ..< withoutDerivative(at: width) {
-            for y in 0 ..< withoutDerivative(at: height) {
+        for y in 0 ..< withoutDerivative(at: height) {
+            for x in 0 ..< withoutDerivative(at: width) {
                 let error = target[x, y] - self[x, y]
                 mse += error * error
             }
