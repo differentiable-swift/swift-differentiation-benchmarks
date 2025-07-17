@@ -38,6 +38,17 @@ extension Array2DStorage {
         self.height = height
         self.values = .init(repeating: element, count: width * height)
     }
+
+    @inlinable
+    init(
+        unsafeUninitializedWidth width: Int,
+        unsafeUninitializedHeight height: Int,
+        initializingWith initializer: (inout UnsafeMutableBufferPointer<Element>, inout Int) -> Void
+    ) {
+        self.width = width
+        self.height = height
+        self.values = .init(unsafeUninitializedCapacity: width * height, initializingWith: initializer)
+    }
 }
 
 extension Array2DStorage: Equatable where Element: Equatable { }
