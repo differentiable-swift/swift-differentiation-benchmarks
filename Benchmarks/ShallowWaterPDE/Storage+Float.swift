@@ -33,16 +33,24 @@ extension Array2DStorage where Element == Float {
     ) {
         let value = self.meanSquaredError(to: target)
         let scale: Float = 2.0 / Float(width * height)
+        let width = self.width
+        let height = self.height
 
         return (
             value: value,
             pullback: { v in
-                var gradient = self
-                for x in 0..<self.width {
-                    for y in 0..<self.height {
-                        gradient[x, y] = v * scale * (self[x, y] - target[x, y])
+                let gradient = Array2DStorage<Float.TangentVector>(
+                    unsafeUninitializedWidth: width,
+                    unsafeUninitializedHeight: height,
+                    initializingWith: { buffer, initializedCount in
+                        initializedCount = width * height
+                        for y in 0..<height {
+                            for x in 0..<width {
+                                buffer[x + y*width] = v * scale * (self[x, y] - target[x, y])
+                            }
+                        }
                     }
-                }
+                )
                 return gradient
             }
         )
