@@ -12,6 +12,7 @@ extension Array2DStorage where Element == Float {
 
     /// Calculates mean squared error loss between the solution and a `target` grayscale image.
     @differentiable(reverse, wrt: self)
+    @inlinable
     func meanSquaredError(to target: Array2DStorage<Float>) -> Float {
         var mse: Float = 0.0
 
@@ -21,7 +22,30 @@ extension Array2DStorage where Element == Float {
                 mse += error * error
             }
         }
-        return mse / Float(width) / Float(height)
+        return mse / (Float(width) * Float(height))
+    }
+
+    @derivative(of: meanSquaredError, wrt: self)
+    @inlinable
+    func _vjpMeanSquaredError(to target: Array2DStorage<Float>) -> (
+        value: Float,
+        pullback: (Float.TangentVector) -> Array2DStorage<Float>.TangentVector
+    ) {
+        let value = self.meanSquaredError(to: target)
+        let scale: Float = 2.0 / Float(width * height)
+
+        return (
+            value: value,
+            pullback: { v in
+                var gradient = self
+                for x in 0..<self.width {
+                    for y in 0..<self.height {
+                        gradient[x, y] = v * scale * (self[x, y] - target[x, y])
+                    }
+                }
+                return gradient
+            }
+        )
     }
 
     @inlinable
