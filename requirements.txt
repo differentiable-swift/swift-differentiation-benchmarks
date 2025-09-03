@@ -1,0 +1,2 @@
+pandas~=2.2
+influxdb_client~=1.48
